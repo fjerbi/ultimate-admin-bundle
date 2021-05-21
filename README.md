@@ -3,7 +3,7 @@
 
 ### Add these lines in your services.yaml
 ```
- fjerbi\AdminBundle\Controller\DefaultController:
+ fjerbi\AdminBundle\Controller\AdmintController:
         calls:
             - method: setContainer
               arguments: [ '@service_container' ]
