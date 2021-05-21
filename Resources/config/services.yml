@@ -1,0 +1,20 @@
+services:
+  fjerbi\AdminBundle\:
+    resource: '../../*'
+    exclude: '../../{DependencyInjection,Entity,Migrations,Tests}'
+
+  fjerbi\AdminBundle\Controller\:
+    resource: '../../Controller'
+    tags: ['controller.service_arguments']
+
+  fjerbi\AdminBundle\EventSubscriber\ViewSubscriber:
+    tags:
+      - { name: kernel.event_subscriber }
+    arguments:
+      ['@Doctrine\ORM\EntityManagerInterface']
+
+  fjerbi\AdminBundle\Twig\AdminExtension:
+    tags: ['twig.extension']
+
+  fjerbi\AdminBundle\Twig\AdminRuntime:
+    tags: ['twig.runtime']
