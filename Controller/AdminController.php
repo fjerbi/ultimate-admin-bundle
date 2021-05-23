@@ -4,6 +4,7 @@
 namespace fjerbi\AdminBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use fjerbi\AdminBundle\Entity\Product;
 use fjerbi\AdminBundle\Entity\Post;
 use fjerbi\AdminBundle\Event\PageViewEvent;
 use fjerbi\AdminBundle\Event\PostViewEvent;
@@ -21,7 +22,7 @@ class AdminController extends AbstractController
 {
 
     /**
-     * @Route("/dashboard", name="admin")
+     * @Route("/dashboard", name="admin_dashboard_home")
      * @param Request $request
      * @param EventDispatcherInterface|null $eventDispatcher
      * @return Response
@@ -40,7 +41,7 @@ class AdminController extends AbstractController
 
         $hasNext = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findBy(["isPublished" => true], ["created" => "desc"]);
+            ->findAll();
         if ($request -> isMethod('post')){
             $search=$request->get('search');
             $posts = $em->getRepository(Post::class)
@@ -48,12 +49,44 @@ class AdminController extends AbstractController
             return $this->render('@Admin/admin/dashboard.html.twig', array('posts' => $posts));
         }
         return $this->render('@Admin/admin/dashboard.html.twig', [
-            'page' => $page,
-            'posts' => $posts,
-            'previous_page' => $page != 1 ? $this->generateUrl('admin', ["page" => $page - 1]) : null,
-            'next_page' => count($hasNext) > 0 ? $this->generateUrl('admin', ["page" => $page + 1]) : null,
+            'posts' => $posts
         ]);
     }
 
 
+        //========================================products section ========================================
+    /**
+     * @Route("/manage/products", name="admin_dashboard_products")
+     * @param Request $request
+     * @param EventDispatcherInterface|null $eventDispatcher
+     * @return Response
+     */
+    public function ManageProductsAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $products = $this->getDoctrine()
+            ->getRepository(Product::class)
+            ->findAll();
+        return $this->render('@Admin/admin/product/manage.html.twig', [
+            'products' => $products
+        ]);
+    }
+    /**
+     * @Route("/delete/product/{id}", name="admin_dashboard_delete_product")
+     * @param Request $request
+     * @param EventDispatcherInterface|null $eventDispatcher
+     * @return Response
+     */
+    public function deleteFromCartAction(Request $request)
+    {
+        $id = $request->get('id');
+        $em = $this->getDoctrine()->getManager();
+        $Product = $em
+            ->getRepository(Product::class)
+            ->find($id);
+        $em->remove($Product);
+        $em->flush();
+        return $this->redirectToRoute('admin_dashboard_products');
+    }
 }

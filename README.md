@@ -3,14 +3,15 @@
 
 ### Add these lines in your services.yaml
 ```
- fjerbi\AdminBundle\Controller\AdmintController:
+ fjerbi\AdminBundle\Controller\DefaultController:
         calls:
             - method: setContainer
               arguments: [ '@service_container' ]
 ```
 
 ### Add this in your routes.yaml
-``` admin:
+``` 
+admin:
   resource: '@Admin/Controller/'
   type: annotation
   prefix: /admin 

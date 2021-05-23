@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Blog Bundle | Gestion Blog</title>
+    <title>The Ultimate Dashboard</title>
 
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
@@ -30,7 +30,7 @@
         <div class="sidebar-wrapper">
             <ul class="nav">
                 <li class="nav-item active  ">
-                    <a class="nav-link" href="./dashboard.html">
+                    <a class="nav-link" href="{{ path('admin_dashboard_home') }}">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
@@ -39,6 +39,12 @@
                     <a class="nav-link" href="./user.html">
                         <i class="material-icons">person</i>
                         <p>User Profile</p>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ path('admin_dashboard_products') }}">
+                        <i class="material-icons">storefront</i>
+                        <p>Products</p>
                     </a>
                 </li>
                 <li class="nav-item ">
@@ -162,15 +168,15 @@
                                 <div class="card-icon">
                                     <i class="material-icons">content_copy</i>
                                 </div>
-                                <p class="card-category">Used Space</p>
-                                <h3 class="card-title">49/50
-                                    <small>GB</small>
+                                <p class="card-category">Posts</p>
+                                <h3 class="card-title">{{ posts|length }}
+                                    <small>posts</small>
                                 </h3>
                             </div>
                             <div class="card-footer">
                                 <div class="stats">
                                     <i class="material-icons text-danger">warning</i>
-                                    <a href="javascript:;">Get More Space...</a>
+                                    <a href="{{ path('home') }}">Manage your posts</a>
                                 </div>
                             </div>
                         </div>
@@ -524,42 +530,30 @@
                     <div class="col-lg-6 col-md-12">
                         <div class="card">
                             <div class="card-header card-header-warning">
-                                <h4 class="card-title">Employees Stats</h4>
+                                <h4 class="card-title">Posts</h4>
                                 <p class="card-category">New employees on 15th September, 2016</p>
                             </div>
                             <div class="card-body table-responsive">
                                 <table class="table table-hover">
                                     <thead class="text-warning">
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Salary</th>
-                                    <th>Country</th>
+                                    <th>Title</th>
+                                    <th>Published</th>
+                                    <th>User</th>
                                     </thead>
                                     <tbody>
+                                    {% for posts in posts %}
                                     <tr>
-                                        <td>1</td>
-                                        <td>Dakota Rice</td>
-                                        <td>$36,738</td>
-                                        <td>Niger</td>
+                                        <td>{{ posts.id }}</td>
+                                        <td>{{ posts.title }}</td>
+                                        <td>{% if posts.isPublished==true %}
+                                        Published
+                                        {% else %}
+                                        Not published</td>
+                                        {% endif %}
+                                        <td>{{ posts.author.username }}</td>
                                     </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Minerva Hooper</td>
-                                        <td>$23,789</td>
-                                        <td>Curaçao</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Sage Rodriguez</td>
-                                        <td>$56,142</td>
-                                        <td>Netherlands</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Philip Chaney</td>
-                                        <td>$38,735</td>
-                                        <td>Korea, South</td>
-                                    </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -628,22 +622,22 @@
             <li class="header-title">Images</li>
             <li class="active">
                 <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-1.jpg" alt="">
+                    <img src="https://blogbundle.000webhostapp.com/admin/img/sidebar-1.jpg" alt="">
                 </a>
             </li>
             <li>
                 <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-2.jpg" alt="">
+                    <img src="https://blogbundle.000webhostapp.com/admin/img/sidebar-2.jpg" alt="">
                 </a>
             </li>
             <li>
                 <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-3.jpg" alt="">
+                    <img src="https://blogbundle.000webhostapp.com/admin/img/sidebar-3.jpg" alt="">
                 </a>
             </li>
             <li>
                 <a class="img-holder switch-trigger" href="javascript:void(0)">
-                    <img src="../assets/img/sidebar-4.jpg" alt="">
+                    <img src="https://blogbundle.000webhostapp.com/admin/img/sidebar-4.jpg" alt="">
                 </a>
             </li>
             <li class="button-container">
@@ -674,48 +668,48 @@
     </div>
 </div>
 <!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.min.js"></script>
-<script src="../assets/js/core/popper.min.js"></script>
-<script src="../assets/js/core/bootstrap-material-design.min.js"></script>
-<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/core/jquery.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/core/popper.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/core/bootstrap-material-design.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
-<script src="../assets/js/plugins/moment.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/moment.min.js"></script>
 <!--  Plugin for Sweet Alert -->
-<script src="../assets/js/plugins/sweetalert2.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/sweetalert2.js"></script>
 <!-- Forms Validations Plugin -->
-<script src="../assets/js/plugins/jquery.validate.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/jquery.validate.min.js"></script>
 <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
-<script src="../assets/js/plugins/jquery.bootstrap-wizard.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/jquery.bootstrap-wizard.js"></script>
 <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
-<script src="../assets/js/plugins/bootstrap-selectpicker.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/bootstrap-selectpicker.js"></script>
 <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
-<script src="../assets/js/plugins/bootstrap-datetimepicker.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/bootstrap-datetimepicker.min.js"></script>
 <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
-<script src="../assets/js/plugins/jquery.dataTables.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/jquery.dataTables.min.js"></script>
 <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
-<script src="../assets/js/plugins/bootstrap-tagsinput.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/bootstrap-tagsinput.js"></script>
 <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-<script src="../assets/js/plugins/jasny-bootstrap.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/jasny-bootstrap.min.js"></script>
 <!--  Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar    -->
-<script src="../assets/js/plugins/fullcalendar.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/fullcalendar.min.js"></script>
 <!-- Vector Map plugin, full documentation here: http://jvectormap.com/documentation/ -->
-<script src="../assets/js/plugins/jquery-jvectormap.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/jquery-jvectormap.js"></script>
 <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-<script src="../assets/js/plugins/nouislider.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/nouislider.min.js"></script>
 <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support SweetAlert -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 <!-- Library for adding dinamically elements -->
-<script src="../assets/js/plugins/arrive.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/arrive.min.js"></script>
 <!--  Google Maps Plugin    -->
 <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Chartist JS -->
-<script src="../assets/js/plugins/chartist.min.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/chartist.min.js"></script>
 <!--  Notifications Plugin    -->
-<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="../assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="../assets/demo/demo.js"></script>
+<script src="https://blogbundle.000webhostapp.com/admin/demo/demo.js"></script>
 <script>
     $(document).ready(function() {
         $().ready(function() {
