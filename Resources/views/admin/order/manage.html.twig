@@ -41,13 +41,13 @@
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item ">
                     <a class="nav-link" href="{{ path('admin_dashboard_products') }}">
                         <i class="material-icons">storefront</i>
                         <p>Products</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item active">
                     <a class="nav-link" href="{{ path('admin_dashboard_orders') }}">
                         <i class="material-icons">inventory</i>
                         <p>Orders</p>
@@ -172,11 +172,9 @@
                     <div class="col-md-12">
                         <div class="card card-plain">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title mt-0">Products</h4>
-                                <p class="card-category">You can manage your products here</p>
-                                <a href="{{ path('admin_dashboard_create_products') }}">
-                                <button class="btn btn-warning pull-left">Create Products</button>
-                                </a>
+                                <h4 class="card-title mt-0">Orders</h4>
+                                <p class="card-category">You can manage Orders</p>
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -186,65 +184,64 @@
                                             ID
                                         </th>
                                         <th>
-                                            Name
+                                          Product  Name
                                         </th>
                                         <th>
-                                            Price
+                                            User
                                         </th>
                                         <th>
-                                            Created At
+                                         Address
                                         </th>
                                         <th>
-                                            Updated At
+                                        Created At
                                         </th>
                                         <th>
-                                            Published
+                                         Quantity
                                         </th>
                                         <th>
-                                            Actions
+                                        Status
+                                        </th>
+                                        <th>
+                                            Shipping by
                                         </th>
                                         </thead>
                                         <tbody>
-                                        {% for products in products %}
-                                        <tr>
-                                            <td>
-                                                {{products.id }}
-                                            </td>
-                                            <td>
-                                                {{products.name }}
-                                            </td>
-                                            <td>
-                                                {{products.price }}
-                                            </td>
-                                            <td>
-                                                {{products.created| date }}
-                                            </td>
-                                            <td>
-                                                {{products.updated| date }}
-                                            </td>
-                                            <td>
-                                               {% if products.isPublished==true %}
-                                                Published
-                                                {% else %}
-                                                Not Published
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                <a href="  {{ path('admin_dashboard_delete_product',{'id':products.id}) }}">
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                                        <i class="material-icons">close</i>
+                                        {% for orders in orders %}
+                                            <tr>
+                                                <td>{{ orders.id}}</td>
 
-                                                    </button>
-                                                </a>
-                                                <a href="  {{ path('admin_dashboard_edit_product',{'id':products.id}) }}">
-                                                    <button type="button" rel="tooltip" title="Edit Product" class="btn btn-info btn-link btn-sm">
-                                                        <i class="material-icons">edit</i>
+                                                <td>
+                                                  {{ orders.product.name }}
+                                                </td>
+                                                <td>
+                                                    {{orders.user.username }}
+                                                </td>
+                                                <td>
+                                                    {{orders.address }}
+                                                </td>
+                                                <td>
+                                                    {{orders.createdAt| date }}
+                                                </td>
+                                                <td>
+                                                    {{orders.quantity }}
+                                                </td>
+                                                <td>
+                                                    {{orders.status }}
+                                                </td>
+                                                <td>
+                                                    {{orders.shipping.name }}
+                                                </td>
+                                                <td>
 
-                                                    </button>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                 {% endfor %}
+                                                    <a href="{{ path('admin_dashboard_edit_order',{'id':orders.id}) }}">
+                                                        <button type="button" rel="tooltip" title="Update status" class="btn btn-info btn-link btn-sm">
+                                                            <i class="material-icons">edit</i>
+
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>

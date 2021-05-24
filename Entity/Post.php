@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints\Date;
 /**
  * Post
  *
- * @ORM\Table(name="blog_posts")
+ * @ORM\Table(name="posts")
  * @ORM\Entity(repositoryClass="fjerbi\AdminBundle\Repository\PostRepository")
  */
 class Post

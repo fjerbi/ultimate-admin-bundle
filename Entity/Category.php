@@ -8,9 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Category
- *
- *
- * @ORM\Table(name="blog_categories")
+ * @ORM\Table(name="post_categories")
  * @ORM\Entity(repositoryClass="fjerbi\AdminBundle\Repository\CategoryRepository")
  */
 class Category

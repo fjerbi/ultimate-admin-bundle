@@ -8,6 +8,8 @@
     <title>The Ultimate Dashboard</title>
 
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    {% block stylesheets %}
+
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
@@ -15,9 +17,12 @@
     <link href="https://blogbundle.000webhostapp.com/admin/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="https://blogbundle.000webhostapp.com/admin/demo/demo.css" rel="stylesheet" />
+    {% endblock %}
 </head>
+
 <body class="">
 <div class="wrapper ">
+    {% block sidebar %}
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
         <!--
           Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -45,12 +50,6 @@
                     <a class="nav-link" href="{{ path('admin_dashboard_products') }}">
                         <i class="material-icons">storefront</i>
                         <p>Products</p>
-                    </a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="{{ path('admin_dashboard_orders') }}">
-                        <i class="material-icons">inventory</i>
-                        <p>Orders</p>
                     </a>
                 </li>
                 <li class="nav-item ">
@@ -98,6 +97,7 @@
             </ul>
         </div>
     </div>
+   {% endblock %}
     <div class="main-panel">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
@@ -165,95 +165,69 @@
             </div>
         </nav>
         <!-- End Navbar -->
+        {% block content %}
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
-                    <div class="col-md-12">
-                        <div class="card card-plain">
+                    <div class="col-md-8">
+                        <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title mt-0">Products</h4>
-                                <p class="card-category">You can manage your products here</p>
-                                <a href="{{ path('admin_dashboard_create_products') }}">
-                                <button class="btn btn-warning pull-left">Create Products</button>
-                                </a>
+                                <h4 class="card-title">Create product</h4>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead class="">
-                                        <th>
-                                            ID
-                                        </th>
-                                        <th>
-                                            Name
-                                        </th>
-                                        <th>
-                                            Price
-                                        </th>
-                                        <th>
-                                            Created At
-                                        </th>
-                                        <th>
-                                            Updated At
-                                        </th>
-                                        <th>
-                                            Published
-                                        </th>
-                                        <th>
-                                            Actions
-                                        </th>
-                                        </thead>
-                                        <tbody>
-                                        {% for products in products %}
-                                        <tr>
-                                            <td>
-                                                {{products.id }}
-                                            </td>
-                                            <td>
-                                                {{products.name }}
-                                            </td>
-                                            <td>
-                                                {{products.price }}
-                                            </td>
-                                            <td>
-                                                {{products.created| date }}
-                                            </td>
-                                            <td>
-                                                {{products.updated| date }}
-                                            </td>
-                                            <td>
-                                               {% if products.isPublished==true %}
-                                                Published
-                                                {% else %}
-                                                Not Published
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                <a href="  {{ path('admin_dashboard_delete_product',{'id':products.id}) }}">
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                                        <i class="material-icons">close</i>
+                                {{ form_start(Form) }}
 
-                                                    </button>
-                                                </a>
-                                                <a href="  {{ path('admin_dashboard_edit_product',{'id':products.id}) }}">
-                                                    <button type="button" rel="tooltip" title="Edit Product" class="btn btn-info btn-link btn-sm">
-                                                        <i class="material-icons">edit</i>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Product name</label>
 
-                                                    </button>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                 {% endfor %}
-                                        </tbody>
-                                    </table>
+                                        </div>
+
+                                        {{ form_widget(Form.name,{'attr':{'type':'text','class':'form-control','placeholder':'Product name'}}) }}
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Product slug</label>
+
+                                        </div>
+
+                                        {{ form_widget(Form.slug,{'attr':{'type':'text','class':'form-control','placeholder':'slug'}}) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Product price</label>
+
+                                        </div>
+
+                                        {{ form_widget(Form.price,{'attr':{'type':'number','class':'form-control','placeholder':'Product price'}}) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="bmd-label-floating">Product price</label>
+
+                                        </div>
+
+                                        {{ form_widget(Form.description,{'attr':{'type':'textarea','class':'form-control','placeholder':'Product description'}}) }}
+                                    </div>
+                                    {{ form_widget(Form.Save,{'attr':{'type':'submit', 'class':'btn btn-primary pull-left'}}) }}
+
                                 </div>
+
+                                {{ form_end(Form) }}
+
+                                <div class="clearfix"></div>
+
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
+        {% endblock %}
+        {% block footer %}
         <footer class="footer">
             <div class="container-fluid">
                 <nav class="float-left">
@@ -289,6 +263,7 @@
                 </div>
             </div>
         </footer>
+        {% endblock %}
     </div>
 </div>
 <div class="fixed-plugin">
@@ -359,6 +334,7 @@
         </ul>
     </div>
 </div>
+{% block javascripts  %}
 <!--   Core JS Files   -->
 <script src="https://blogbundle.000webhostapp.com/admin/js/core/jquery.min.js"></script>
 <script src="https://blogbundle.000webhostapp.com/admin/js/core/popper.min.js"></script>
@@ -580,5 +556,6 @@
 
     });
 </script>
+{% endblock %}
 </body>
 </html>
